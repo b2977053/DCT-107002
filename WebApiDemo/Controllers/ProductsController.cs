@@ -102,12 +102,13 @@ namespace WebApiDemo.Controllers
         // POST: api/Products
         [Route("")]
         [ResponseType(typeof(Product))]
+        [ValidateModel]
         public IHttpActionResult PostProduct(Product product)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             db.Product.Add(product);
             db.SaveChanges();
