@@ -21,13 +21,20 @@ namespace WebApiDemo.Controllers
             db.Configuration.LazyLoadingEnabled = false;
         }
 
-        // GET: api/Products
+        /// <summary>
+        /// 取得所有商品
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Product> GetProduct()
         {
             return db.Product.OrderByDescending(p => p.ProductId).Take(10);
         }
-
-        // GET: api/Products/5
+        
+        /// <summary>
+        /// 取得單一商品
+        /// </summary>
+        /// <param name="id">ProductId</param>
+        /// <returns></returns>
         [ResponseType(typeof(Product))]
         public IHttpActionResult GetProduct(int id)
         {
