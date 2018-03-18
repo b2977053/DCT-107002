@@ -61,6 +61,17 @@ namespace WebApiDemo.Controllers
             return Ok(client);
         }
 
+        [Route("FromBodyTest")]
+        public IHttpActionResult PostA([FromBody]string name)
+        {
+            return Ok(name);
+        }
+
+        [Route("FromUriTest")]
+        public IHttpActionResult GetA([FromUri]GeoPoint geo)
+        {
+            return Ok(geo);
+        }
 
 
         // PUT: api/Clients/5
