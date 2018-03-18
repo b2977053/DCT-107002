@@ -12,6 +12,7 @@ using WebApiDemo.Models;
 
 namespace WebApiDemo.Controllers
 {
+    [RoutePrefix("products")]
     public class ProductsController : ApiController
     {
         private FabricsEntities db = new FabricsEntities();
@@ -25,7 +26,7 @@ namespace WebApiDemo.Controllers
         /// 取得所有商品
         /// </summary>
         /// <returns></returns>
-        [Route("prod")]
+        [Route("")]
         public IQueryable<Product> GetProduct()
         {
             return db.Product.OrderByDescending(p => p.ProductId).Take(10);
@@ -36,7 +37,7 @@ namespace WebApiDemo.Controllers
         /// </summary>
         /// <param name="id">ProductId</param>
         /// <returns></returns>
-        [Route("prod/{id}")]
+        [Route("{id}", Name = "GetProductById")]
         [ResponseType(typeof(Product))]
         public IHttpActionResult GetProduct(int id)
         {
@@ -49,7 +50,7 @@ namespace WebApiDemo.Controllers
             return Ok(product);
         }
 
-        [Route("prod/{id:int}/orderlines")]
+        [Route("{id:int}/orderlines")]
         [ResponseType(typeof(Product))]
         public IHttpActionResult GetProductOrderLines(int id)
         {
@@ -63,6 +64,7 @@ namespace WebApiDemo.Controllers
         }
 
         // PUT: api/Products/5
+        [Route("{id}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutProduct(int id, Product product)
         {
@@ -98,6 +100,7 @@ namespace WebApiDemo.Controllers
         }
 
         // POST: api/Products
+        [Route("")]
         [ResponseType(typeof(Product))]
         public IHttpActionResult PostProduct(Product product)
         {
@@ -109,10 +112,11 @@ namespace WebApiDemo.Controllers
             db.Product.Add(product);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
+            return CreatedAtRoute("GetProductById", new { id = product.ProductId }, product);
         }
 
         // DELETE: api/Products/5
+        [Route("{id}")]
         [ResponseType(typeof(Product))]
         public IHttpActionResult DeleteProduct(int id)
         {
